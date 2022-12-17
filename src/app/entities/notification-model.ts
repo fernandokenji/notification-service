@@ -1,6 +1,5 @@
-import { randomUUID } from 'crypto';
 import { Replace } from '../../helpers/replace';
-import { BaseEntityModel } from './base-model';
+import { BaseModel } from './base/base-model';
 import { ContentModel } from './content-model';
 
 export interface INotificationProps {
@@ -8,14 +7,18 @@ export interface INotificationProps {
   content: ContentModel;
   category: string;
   readAt?: Date | null;
+  canceledAt?: Date | null;
   createdAt: Date;
 }
 
-export class NotificationModel extends BaseEntityModel {
+export class NotificationModel extends BaseModel {
   private props: INotificationProps;
 
-  constructor(props: Replace<INotificationProps, { createdAt?: Date }>) {
-    super(randomUUID());
+  constructor(
+    props: Replace<INotificationProps, { createdAt?: Date }>,
+    id?: string,
+  ) {
+    super(id);
 
     this.props = {
       ...props,
@@ -39,19 +42,32 @@ export class NotificationModel extends BaseEntityModel {
     return this.props.content;
   }
 
-  public set catergory(category: string) {
+  public set category(category: string) {
     this.props.category = category;
   }
 
-  public get catergory(): string {
+  public get category(): string {
     return this.props.category;
   }
-  public set readAt(readAt: Date | null | undefined) {
-    this.props.readAt = readAt;
+
+  public read() {
+    this.props.readAt = new Date();
+  }
+
+  public unread() {
+    this.props.readAt = null;
   }
 
   public get readAt(): Date | null | undefined {
     return this.props.readAt;
+  }
+
+  public cancel() {
+    this.props.canceledAt = new Date();
+  }
+
+  public get canceledAt(): Date | null | undefined {
+    return this.props.canceledAt;
   }
 
   public get createdAt(): Date {

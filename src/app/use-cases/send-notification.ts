@@ -3,23 +3,23 @@ import { ContentModel } from '../entities/content-model';
 import { NotificationModel } from '../entities/notification-model';
 import { NotificationsRepository } from '../repositories/notifications-repository';
 
-interface ISendNotificationRequest {
+interface SendNotificationRequest {
   recipientId: string;
   content: string;
   category: string;
 }
 
-interface ISendNotificationResponse {
+interface SendNotificationResponse {
   notification: NotificationModel;
 }
 
 @Injectable()
-export class SendNotificationUseCase {
+export class SendNotification {
   constructor(private notificationsRepository: NotificationsRepository) {}
 
   async execute(
-    request: ISendNotificationRequest,
-  ): Promise<ISendNotificationResponse> {
+    request: SendNotificationRequest,
+  ): Promise<SendNotificationResponse> {
     const { recipientId, content, category } = request;
 
     const notification = new NotificationModel({
