@@ -1,3 +1,3 @@
 # notification-service
 
-Create a microservice wiht nodejs, nest, prisma, jtest, kafka
+Create a microservice whit nodejs, nest, prisma, jtest, kafka
